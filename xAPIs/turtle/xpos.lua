@@ -332,11 +332,11 @@ function move(x, y, z, order)
 	end
 
 	for i=1,3 do
-		if order[i] == 1 then
+		if order[i] == 1 and x ~= nil then
 			moveX(posX + x)
-		elseif order[i] == 2 then
+		elseif order[i] == 2 and y ~= nil then
 			moveY(posY + y)
-		elseif order[i] == 3 then
+		elseif order[i] == 3 and z ~= nil then
 			moveZ(posZ + z)
 		end
 	end
@@ -352,11 +352,11 @@ function moveTo(x, y, z, order)
 	end
 
 	for i=1,3 do
-		if order[i] == 1 then
+		if order[i] == 1 and x ~= nil then
 			moveX(x)
-		elseif order[i] == 2 then
+		elseif order[i] == 2 and y ~= nil then
 			moveY(y)
-		elseif order[i] == 3 then
+		elseif order[i] == 3 and z ~= nil then
 			moveZ(z)
 		end
 	end
