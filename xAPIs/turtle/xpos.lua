@@ -100,14 +100,6 @@ function setPosition(x, y, z)
 	end
 end
 
--- Currently a placeholder, will ask for fuel from the main server
-local function onOutOfFuel()
-	print("Out of fuel. Standing by...")
-	while not searchForFuel() do
-		os.sleep(5)
-	end
-end
-
 -- Warning: It'll burn anything it can find!
 local function searchForFuel()
 	local oldSlot = turtle.getSelectedSlot()
@@ -120,6 +112,33 @@ local function searchForFuel()
 	end
 	turtle.select(oldSlot)
 	return false
+end
+
+-- Asks for fuel from the main server
+local function onOutOfFuel()
+	print("Out of fuel. Standing by...")
+
+	local ack = false
+	while not searchForFuel() do
+		if not ack then
+			local id = rednet.lookup("CtrlServer")
+			if id ~= nil then
+				local toSend = {}
+		--[[ This should be modified for correct placement ]]
+				toSend.x = posX
+				toSend.y = posY
+				toSend.z = posZ + 1
+				toSend.dir = 1
+
+				rednet.send(id, textutils.serialize(toSend), "out-of-fuel")
+				local id, answer = rednet.receive("out-of-fuel", 10)
+				if answer == "ACK" then
+					ack = true
+				end
+			end
+		end
+		os.sleep(5)
+	end
 end
 
 local function checkForFuel()
@@ -248,7 +267,7 @@ end
 
 function turnRight()
 	turtle.turnRight()
-	direction = math.fmod(direction+2, 4) + 1 
+	direction = math.fmod(direction+2, 4) + 1
 end
 
 -- Absolute turn, integers 1-4 or strings "north", "west", "south" and "east"
