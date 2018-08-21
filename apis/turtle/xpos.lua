@@ -260,15 +260,15 @@ function down()
             os.sleep(2)
         end,
         [2] = function()
-            turtle.digUp()
+            turtle.digDown()
         end,
         [3] = function()
-            turtle.attackUp()
+            turtle.attackDown()
             os.sleep(1)
         end,
         [4] = function()
-            turtle.digUp()
-            turtle.attackUp()
+            turtle.digDown()
+            turtle.attackDown()
         end
     }
 
