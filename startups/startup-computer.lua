@@ -2,9 +2,9 @@
 
 --[[
 if shell.openTab ~= nil then
-	shell.openTab("progs/ctrlServer")
+    shell.openTab("progs/ctrlServer")
 else
-	shell.run("progs/ctrlServer")
+    shell.run("progs/ctrlServer")
 end
 ]]
 
