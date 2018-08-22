@@ -1,4 +1,4 @@
--- Copyright (C) 2017, GReaperEx(Marios F.)
+-- Copyright (C) 2017-2018, GReaperEx(Marios F.)
 
 -- Change this line for different facing
 local chestDir = "north"
