@@ -413,8 +413,8 @@ function init()
         checkForFuel()
         
         local relMoves = {
-            [-1] = { [0] = 2 }
-            [0]  = { [-1] = 1, [1] = 3 }
+            [-1] = { [0] = 2 },
+            [0]  = { [-1] = 1, [1] = 3 },
             [1]  = { [0] = 4 }
         }
 
@@ -490,7 +490,7 @@ function revCommand(cmdStr)
     for cmd, amount in string.gmatch(cmdStr, "(%a)(%d*)") do
         cmd = string.lower(cmd)
         if amount == nil or amount == "" then
-            amount == 1
+            amount = 1
         end
         revCmd = revEncodes[cmd]..amount..revCmd
     end
