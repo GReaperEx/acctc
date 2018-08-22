@@ -450,3 +450,49 @@ function init()
     end
 end
 
+--[[ Parses a command string that tells the turtle how to move.
+     Every action can be one of possible moves (f, b, l, r, u, d)
+     plus an optional integer for the amount of steps. ]]
+function command(cmdStr)
+    local encodedCmds = {
+        ["f"] = function() forward() end,
+        ["b"] = function() back() end,
+        ["l"] = function() turnLeft() end,
+        ["r"] = function() turnRight() end,
+        ["u"] = function() up() end,
+        ["d"] = function() down() end
+    }
+
+    for cmd, amount in string.gmatch(cmdStr, "(%a)(%d*)") do
+        cmd = string.lower(cmd)
+        if amount == nil or amount == "" then
+            amount = 1
+        end
+
+        for i = 1, amount do
+            encodedCmds[cmd]()
+        end
+    end
+end
+
+-- Moves so as to negate the actions of command()
+function revCommand(cmdStr)
+    local revEncodes = {
+        ["f"] = "b",
+        ["b"] = "f",
+        ["l"] = "r",
+        ["r"] = "l",
+        ["u"] = "d",
+        ["d"] = "u"
+    }
+    local revCmd = ""
+
+    for cmd, amount in string.gmatch(cmdStr, "(%a)(%d*)") do
+        cmd = string.lower(cmd)
+        if amount == nil or amount == "" then
+            amount == 1
+        end
+        revCmd = revEncodes[cmd]..amount..revCmd
+    end
+    command(revCmd)
+end
