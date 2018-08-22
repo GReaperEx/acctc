@@ -411,58 +411,37 @@ function init()
     local x, y, z = gps.locate(10)
     if x ~= nil then
         checkForFuel()
+        
+        local relMoves = {
+            [-1] = { [0] = 2 }
+            [0]  = { [-1] = 1, [1] = 3 }
+            [1]  = { [0] = 4 }
+        }
+
         if turtle.forward() then
             local newX, newY, newZ = gps.locate(10)
-            if newX > x then
-                direction = 4
-            elseif newX < x then
-                direction = 2
-            elseif newZ > z then
-                direction = 3
-            elseif newZ < z then
-                direction = 1
-            end
+            direction = relMoves[newX - x][newZ - z]
+
             setPosition(newX, newY, newZ)
             back()
         elseif turtle.back() then
             local newX, newY, newZ = gps.locate(10)
-            if newX < x then
-                direction = 4
-            elseif newX > x then
-                direction = 2
-            elseif newZ < z then
-                direction = 3
-            elseif newZ > z then
-                direction = 1
-            end
+            direction = relMoves[x - newX][z - newZ]
+
             setPosition(newX, newY, newZ)
             forward()
         else
             turnLeft()
             if turtle.forward() then
                 local newX, newY, newZ = gps.locate(10)
-                if newX > x then
-                    direction = 4
-                elseif newX < x then
-                    direction = 2
-                elseif newZ > z then
-                    direction = 3
-                elseif newZ < z then
-                    direction = 1
-                end
+                direction = relMoves[newX - x][newZ - z]
+
                 setPosition(newX, newY, newZ)
                 back()
             elseif turtle.back() then
                 local newX, newY, newZ = gps.locate(10)
-                if newX < x then
-                    direction = 4
-                elseif newX > x then
-                    direction = 2
-                elseif newZ < z then
-                    direction = 3
-                elseif newZ > z then
-                    direction = 1
-                end
+                direction = relMoves[x - newX][z - newZ]
+
                 setPosition(newX, newY, newZ)
                 forward()
             end
